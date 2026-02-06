@@ -1,4 +1,4 @@
 node_modules/
-dist/
+# dist/ # Removed so compiled action code can be committed
 .env
 .DS_Store
