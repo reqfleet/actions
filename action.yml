@@ -1,0 +1,31 @@
+name: 'Reqfleet Tests Action'
+description: 'Runs Reqfleet tests and evaluates performance metrics.'
+inputs:
+  collection_id:
+    description: 'The collection ID for Reqfleet tests'
+    required: true
+  api_key:
+    description: 'The API key for Reqfleet.'
+    required: true
+  fail_on_over_threashold:
+    description: 'If true, the step will fail if any metric exceeds its threshold.'
+    required: false
+    default: 'true'
+  latency_threashold:
+    description: 'Latency thresholds for avg, p50, and p99, e.g., "avg:50ms,p50:50ms,p99:100ms"'
+    required: false
+  status_threadshold:
+    description: 'Status code thresholds, e.g., "200:100%"'
+    required: false
+
+outputs:
+  summary:
+    description: 'Summary of the Reqfleet test results.'
+  raw_metrics_output:
+    description: 'Raw metrics from the Reqfleet tests (if raw_metrics is true).'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
+brands:
+  color: 'purple'
+  icon: 'activity'

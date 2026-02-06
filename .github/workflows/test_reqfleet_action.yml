@@ -1,0 +1,26 @@
+name: Test Reqfleet Action
+
+on: [push] # This workflow will run on every push to the repository
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Reqfleet Action
+        uses: ./ # This points to your local action
+        id: reqfleet # Assign an ID to the step to access its outputs
+        with:
+          collection_id: 'test-collection-123'
+          api_key: ${{ secrets.REQFLEET_API_KEY }} # Use a GitHub Secret for your API key
+          fail_on_over_threashold: true
+          latency_threashold: 'avg:60ms,p50:70ms,p99:120ms'
+          status_threadshold: '200:99%'
+          # raw_metrics: true # This input has been removed
+
+      - name: Get Reqfleet Action Outputs
+        run: |
+          echo "Summary Output: ${{ steps.reqfleet.outputs.summary }}"
+          # echo "Raw Metrics Output: ${{ steps.reqfleet.outputs.raw_metrics_output }}" # This output has been removed
