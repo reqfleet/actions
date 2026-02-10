@@ -1,6 +1,7 @@
 name: Test Reqfleet Action
 
-on: [push] # This workflow will run on every push to the repository
+on:
+  workflow_dispatch:
 
 jobs:
   test:
@@ -13,14 +14,15 @@ jobs:
         uses: ./ # This points to your local action
         id: reqfleet # Assign an ID to the step to access its outputs
         with:
-          collection_id: 'test-collection-123'
+          collection_id: '58710791704019002'
           api_key: ${{ secrets.REQFLEET_API_KEY }} # Use a GitHub Secret for your API key
+          reqfleet_api_endpoint: http://localtest.me
           fail_on_over_threashold: true
           latency_threashold: 'avg:60ms,p50:70ms,p99:120ms'
-          status_threadshold: '200:99%'
+          status_threadshold: '200:100%'
           # raw_metrics: true # This input has been removed
 
       - name: Get Reqfleet Action Outputs
         run: |
           echo "Summary Output: ${{ steps.reqfleet.outputs.summary }}"
-          # echo "Raw Metrics Output: ${{ steps.reqfleet.outputs.raw_metrics_output }}" # This output has been removed
+          # echo "Raw Metrics Output: ${{ steps.reqfleet.outputs.raw_metrics_output }}" # This output has been removedo
