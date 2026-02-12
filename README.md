@@ -15,9 +15,10 @@ This GitHub Action allows you to integrate Reqfleet performance tests directly i
 | :------------------------- | :------------------------------------------------------------------------ | :------- | :---------- |
 | `collection_id`            | The ID of the Reqfleet collection to run.                                 | `true`   |             |
 | `api_key`                  | The API key for authenticating with the Reqfleet API.                     | `true`   |             |
-| `fail_on_over_threashold`  | If `true`, the step will fail if any metric exceeds its defined threshold. | `false`  | `true`      |
-| `latency_threashold`       | Latency thresholds for `avg`, `p50`, `p90`, `p95`, `p99`, e.g., `"avg:50ms,p50:50ms,p99:100ms"`. | `false`  |             |
-| `status_threadshold`       | Status code thresholds, e.g., `"200:100%,400:0%"`.                       | `false`  |             |
+| `reqfleet_api_endpoint`    | Custom API endpoint for Reqfleet. If provided, will be set as `REQFLEET_API_ENDPOINT` environment variable. | `false`  |             |
+| `fail_on_over_threshold`  | If `true`, the step will fail if any metric exceeds its defined threshold. | `false`  | `true`      |
+| `latency_threshold`       | Latency thresholds for `avg`, `p50`, `p90`, `p95`, `p99`, e.g., `"avg:50ms,p90:100ms,p99:150ms"`. | `false`  |             |
+| `status_threshold`        | Status code thresholds, e.g., `"200=100%,401<10%"`.                      | `false`  |             |
 
 ## Outputs
 
@@ -50,10 +51,10 @@ jobs:
         with:
           collection_id: 'your-reqfleet-collection-id'
           api_key: ${{ secrets.REQFLEET_API_KEY }}
-          fail_on_over_threashold: true
-          latency_threashold: 'avg:100ms,p95:200ms,p99:300ms' # Example thresholds
-          status_threadshold: '200:100%,401:0%' # Example thresholds: 100% 200s, 0% 401s
-
+          reqfleet_api_endpoint: 'https://custom.reqfleet.io' # Optional: Specify a custom API endpoint
+          fail_on_over_threshold: true
+          latency_threshold: 'avg:100ms,p90:150ms,p95:200ms,p99:300ms' # Example thresholds
+          status_threshold: '200=100%,401<10%' # Example thresholds: 100% 200s, less than 10% 401s
       - name: Report Summary
         run: |
           echo "Reqfleet Test Summary:"

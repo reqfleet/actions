@@ -4,7 +4,7 @@
   "description": "GitHub Action for Reqfleet tests",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "ncc build src/index.ts -o dist --source-map --license licenses.txt",
     "test": "echo 'Error: no test specified' && exit 1"
   },
   "keywords": [],
@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
+    "@vercel/ncc": "^0.38.1",
     "typescript": "^5.0.0"
   }
 }
