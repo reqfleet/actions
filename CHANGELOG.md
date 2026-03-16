@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.2](https://github.com/reqfleet/actions/compare/reqfleet-actions-v0.1.1...reqfleet-actions-v0.1.2) (2026-03-16)
+
+
+### Bug Fixes
+
+* branding is missing ([01da56b](https://github.com/reqfleet/actions/commit/01da56bfb26dabde1099a66195c3c5663ae25779))
+* branding is missing ([0f1b1c6](https://github.com/reqfleet/actions/commit/0f1b1c6bdba0331e951d7450a86fdca5e6031c55))
+
 ## [0.1.1](https://github.com/reqfleet/actions/compare/reqfleet-actions-v0.1.0...reqfleet-actions-v0.1.1) (2026-03-16)
 
 
