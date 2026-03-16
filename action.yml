@@ -28,6 +28,7 @@ outputs:
 runs:
   using: 'node20'
   main: 'dist/index.js'
-brands:
-  color: 'purple'
+
+branding:
+  color: 'blue'
   icon: 'activity'
