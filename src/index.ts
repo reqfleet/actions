@@ -131,7 +131,7 @@ async function run() {
     const statusThresholdInput = core.getInput('status_threshold');
 
     core.info(`Reqfleet Action Inputs:`);
-    core.info(`  collection_id: ${collectionId}`);
+    core.info(`  collection-id: ${collectionId}`);
     core.info(`  api_key: ***${apiKey.substring(apiKey.length - 4)}`); // Mask API key for logs
     if (reqfleetApiEndpoint) {
       core.info(`  reqfleet_api_endpoint: ${reqfleetApiEndpoint}`);
@@ -160,7 +160,7 @@ async function run() {
         arch = 'amd64';
         break;
       case 'arm64':
-        arch = 'arm';
+        arch = 'arm64';
         break;
       default:
         throw new Error(`Unsupported architecture: ${os.arch()}`);
@@ -193,7 +193,7 @@ async function run() {
     // Execute rqt collection launch
     core.info(`Attempting to launch collection: ${collectionId}`);
     try {
-      const launchOutput = await execCommand(rqtPath, ['collection', 'launch', `--collection_id=${collectionId}`]);
+      const launchOutput = await execCommand(rqtPath, ['collection', 'launch', `--collection-id=${collectionId}`]);
       core.info(`rqt collection launch output: ${launchOutput}`);
     } catch (launchError: any) {
       core.error(`Launch Command failed. Stderr: ${launchError.stderr}`);
@@ -210,13 +210,14 @@ async function run() {
     core.info(`Attempting to trigger collection '${collectionId}' (timeout: 6 minutes)...`);
     while (Date.now() - startTimeTrigger < timeoutTrigger) {
       try {
-        const triggerOutput = await execCommand(rqtPath, ['collection', 'trigger', `--collection_id=${collectionId}`]);
+        const triggerOutput = await execCommand(rqtPath, ['collection', 'trigger', `--collection-id=${collectionId}`]);
         core.info(`rqt collection trigger output: ${triggerOutput}`);
         triggered = true;
         break;
       } catch (triggerError: any) {
         lastTriggerError = triggerError;
         // Suppress errors during retry as requested
+        core.info(`Trigger attempt failed. Retrying... Stderr: ${triggerError.stderr}`);
         await new Promise(resolve => setTimeout(resolve, 5000)); // Wait 5 seconds before retrying
       }
     }
@@ -238,7 +239,7 @@ async function run() {
     while (isRunning) {
       let summaryOutput = '';
       try {
-        summaryOutput = await execCommand(rqtPath, ['collection', 'run_summary', `--collection_id=${collectionId}`]);
+        summaryOutput = await execCommand(rqtPath, ['collection', 'run_summary', `--collection-id=${collectionId}`]);
       } catch (summaryError: any) {
         core.error(`Summary Command failed. Stderr: ${summaryError.stderr}`);
         core.setFailed(`Failed to retrieve run summary: ${summaryError.error?.message || summaryError}`);
@@ -313,7 +314,7 @@ async function run() {
     if (collectionId && rqtPath && fs.existsSync(rqtPath)) {
       core.info(`Purging resources for collection: ${collectionId}`);
       try {
-        await execCommand(rqtPath, ['collection', 'purge', `--collection_id=${collectionId}`]);
+        await execCommand(rqtPath, ['collection', 'purge', `--collection-id=${collectionId}`]);
         core.info(`Successfully purged resources.`);
       } catch (purgeError: any) {
         core.warning(`Failed to purge resources: ${purgeError.error?.message || purgeError}`);
