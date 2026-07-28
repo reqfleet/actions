@@ -7,20 +7,14 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Run Reqfleet Action
-        uses: ./ # This points to your local action
+        uses: reqfleet/actions@v0.1.3 # https://github.com/marketplace/actions/reqfleet-tests-action
         id: reqfleet # Assign an ID to the step to access its outputs
         with:
-          collection_id: '58710791704019002'
+          collection_id: 'your collection_id'
           api_key: ${{ secrets.REQFLEET_API_KEY }} # Use a GitHub Secret for your API key
-          reqfleet_api_endpoint: http://localtest.me
           fail_on_over_threshold: true
-          latency_threshold: 'avg:60ms,p50:70ms,p99:120ms'
-          status_threshold: '200=100%'
-          # raw_metrics: true # This input has been removed
+          latency_threshold: 'avg:100ms,p90:150ms,p95:200ms,p99:300ms'
 
       - name: Get Reqfleet Action Outputs
         run: |
