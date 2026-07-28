@@ -46,7 +46,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Reqfleet Performance Tests
-        uses: reqfleet/actions@v1 # Replace @v1 with your action's release tag or commit SHA
+        uses: reqfleet/actions@v0.1.3 # https://github.com/marketplace/actions/reqfleet-tests-action
         id: reqfleet_run
         with:
           collection_id: 'your-reqfleet-collection-id'
@@ -60,6 +60,8 @@ jobs:
           echo "Reqfleet Test Summary:"
           echo "${{ steps.reqfleet_run.outputs.summary }}"
 ```
+
+You can check the latest version of the action here: [https://github.com/marketplace/actions/reqfleet-tests-action](https://github.com/marketplace/actions/reqfleet-tests-action)
 
 ### Setting up `REQFLEET_API_KEY`
 
